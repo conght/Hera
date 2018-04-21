@@ -20,31 +20,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// Singleton is a template class which can make the class inherited it be a
-// singleton simplely.
+#ifndef HERA_INCLUDE_STRING_UTIL_H_
+#define HERA_INCLUDE_STRING_UTIL_H_
 
-#ifndef HERA_INCLUDE_SINGLETON_H_
-#define HERA_INCLUDE_SINGLETON_H_
+#include <string>
+#include <vector>
 
 namespace hera {
 
 
-// A singleton template class.
+// A extra string utils set..
 // Example:
-//    Class CYourNewClass : hera::Singleton<CYourNewClass> { ...
-//    ...
-//    CYourNewClass* singleton_instance = CYourNewClass::instance();
-template<typename T>
-class Singleton {
+//    ::hera::StringUtil::Func();
+class StringUtil {
 public:
-    static T* instance();
+
+	// Returns an vector contains the result of input string seperated by sep.
+	// It is a static function.  And it is thread-safe.
+    static std::vector<std::string> Split(const std::string &input, const std::string &seperator = ",");
+
 };
 
-template<typename T>
-T* Singleton<T>::instance() {
-    static T instance_;
-    return &instance_;
-}
 
 }
 #endif

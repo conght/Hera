@@ -20,31 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// Singleton is a template class which can make the class inherited it be a
-// singleton simplely.
-
-#ifndef HERA_INCLUDE_SINGLETON_H_
-#define HERA_INCLUDE_SINGLETON_H_
+#include "string_util.h"
 
 namespace hera {
 
+std::vector<std::string> StringUtil::Split(const std::string &input, const std::string &seperator) {
 
-// A singleton template class.
-// Example:
-//    Class CYourNewClass : hera::Singleton<CYourNewClass> { ...
-//    ...
-//    CYourNewClass* singleton_instance = CYourNewClass::instance();
-template<typename T>
-class Singleton {
-public:
-    static T* instance();
-};
-
-template<typename T>
-T* Singleton<T>::instance() {
-    static T instance_;
-    return &instance_;
 }
 
 }
-#endif
