@@ -26,6 +26,8 @@
 #ifndef HERA_INCLUDE_SINGLETON_H_
 #define HERA_INCLUDE_SINGLETON_H_
 
+#include "noncopyable.h"
+
 namespace hera {
 
 
@@ -34,17 +36,60 @@ namespace hera {
 //    Class CYourNewClass : hera::Singleton<CYourNewClass> { ...
 //    ...
 //    CYourNewClass* singleton_instance = CYourNewClass::instance();
-template<typename T>
-class Singleton {
-public:
-    static T* instance();
-};
+template <typename T>
+class Singleton : public Noncopyable
+{
+  private:
+    struct object_creator
+    {
+      // This constructor does nothing more than ensure that instance()
+      //  is called before main() begins, thus creating the static
+      //  T object before multithreading race issues can come up.
+      object_creator() { Singleton<T>::instance(); }
+      inline void do_nothing() const { }
+    };
+    static object_creator create_object;
 
-template<typename T>
-T* Singleton<T>::instance() {
-    static T instance_;
-    return &instance_;
-}
+    Singleton();
+
+  public:
+    typedef T object_type;
+
+    // If, at any point (in user code), Singleton<T>::instance()
+    //  is called, then the following function is instantiated.
+    static const object_type & instance()
+    {
+      // This is the object that we return a reference to.
+      // It is guaranteed to be created before main() begins because of
+      //  the next line.
+      static object_type obj;
+
+      // The following line does nothing else than force the instantiation
+      //  of Singleton<T>::create_object, whose constructor is
+      //  called before main() begins.
+      create_object.do_nothing();
+
+      return obj;
+    }
+
+    static object_type & mutable_instance()
+    {
+      // This is the object that we return a reference to.
+      // It is guaranteed to be created before main() begins because of
+      //  the next line.
+      static object_type obj;
+
+      // The following line does nothing else than force the instantiation
+      //  of Singleton<T>::create_object, whose constructor is
+      //  called before main() begins.
+      create_object.do_nothing();
+
+      return obj;
+    }
+};
+template <typename T>
+typename Singleton<T>::object_creator
+Singleton<T>::create_object;
 
 }
 #endif
