@@ -20,12 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "string_util.h"
+#include <iostream>
 
-namespace hera {
+#include "../include/string_util.hpp"
 
-std::vector<std::string> StringUtil::Split(const std::string &input, const std::string &seperator) {
-
-}
-
+int main()
+{
+	std::cout<<" test ... "<<std::endl;
+	return 0;
 }
