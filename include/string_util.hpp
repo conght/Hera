@@ -29,23 +29,13 @@
 
 namespace hera {
 
-template< class T > struct BasicStringType
-{
-    T item;
-};
-
-template<> struct BasicStringType<std::wstring>
-{
-    std::wstring item;
-};
-
 // Returns an vector contains the result of input string seperated by sep.
 // It is a static function.  And it is thread-safe.
-template<typename T>
-static void split(const T &input, std::vector<T> &output, const T &seperator)
+template<typename T, typename C>
+static void split(const T &input, std::vector<T> &output, const C &seperator)
 {
 	output.clear();
-    std::basic_stringstream<BasicStringType<T>.item::value_type> bss(input);
+    std::basic_istringstream<typename T::value_type> bss(input);
     T temp;
 
     while (std::getline(bss, temp, seperator)) {
