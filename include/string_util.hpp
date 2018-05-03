@@ -26,11 +26,14 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <iostream>
 
 namespace hera {
 
 // Returns an vector contains the result of input string seperated by sep.
 // It is a static function.  And it is thread-safe.
+// Example : 
+//    
 template<typename T, typename C>
 static void split(const T &input, std::vector<T> &output, const C &seperator)
 {
@@ -42,6 +45,36 @@ static void split(const T &input, std::vector<T> &output, const C &seperator)
         output.emplace_back(std::move(temp));
     }
 
+    return;
+}
+
+// Returns an vector contains the result of input string seperated by sep.
+// It is a static function.  And it is thread-safe.
+// Example : 
+//    
+template<typename T>
+static void split(const T &input, std::vector<T> &output, const T &seperator)
+{
+	output.clear();
+
+	typedef typename T::size_type size_type_t;
+	typedef typename T::value_type value_type_t;
+
+	size_type_t npos_t = std::basic_string<value_type_t>::npos;
+
+	size_type_t last = 0;  
+    size_type_t index = input.find_first_of(seperator, last);
+
+    while (index != npos_t)
+    {  
+        output.push_back(input.substr(last, index-last));  
+        last=index+1;
+        index=input.find_first_of(seperator, last);  
+    }
+    if (index - last > 0)  
+    {  
+        output.push_back(input.substr(last, index - last));  
+    }
     return;
 }
 }

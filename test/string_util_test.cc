@@ -26,7 +26,7 @@
 
 int main()
 {
-	std::cout << " test split std::string ... " << std::endl;
+	std::cout << " test split ( std::string, char ) ... " << std::endl;
 	std::string original_string = "Hello World , I am Hera !";
 	std::vector<std::string> v;
 	char sep = ' ';
@@ -36,7 +36,7 @@ int main()
 		std::cout << (*iter) << std::endl;
 	}
 
-	std::cout << " test split std::wstring ... " << std::endl;
+	std::cout << " test split ( std::wstring, wchar_t ) ... " << std::endl;
 	std::wstring original_wstring = L"Hello World , I am Hera !";
 	
 	wchar_t w_sep = ' ';
@@ -45,6 +45,14 @@ int main()
 	for (auto iter=w_v.begin();iter!=w_v.end();iter++) 
 	{
 		std::wcout << (*iter) << std::endl;
+	}
+
+	std::cout << " test split ( std::string, std::string ) ... " << std::endl;
+	std::string str_sep = " ";
+	::hera::split(original_string, v, str_sep);
+	for (auto iter=v.begin();iter!=v.end();iter++) 
+	{
+		std::cout << (*iter) << std::endl;
 	}
 	return 0;
 }
