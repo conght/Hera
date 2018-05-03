@@ -67,7 +67,7 @@ static void split(const T &input, std::vector<T> &output, const T &seperator)
 
     while (index != npos_t)
     {  
-        output.push_back(input.substr(last, index-last));  
+        output.push_back(input.substr(last, index - last));  
         last=index+1;
         index=input.find_first_of(seperator, last);  
     }
