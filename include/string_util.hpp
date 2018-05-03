@@ -37,7 +37,7 @@ namespace hera {
 template<typename T, typename C>
 static void split(const T &input, std::vector<T> &output, const C &seperator)
 {
-	output.clear();
+    output.clear();
     std::basic_istringstream<typename T::value_type> bss(input);
     T temp;
 
@@ -55,14 +55,14 @@ static void split(const T &input, std::vector<T> &output, const C &seperator)
 template<typename T>
 static void split(const T &input, std::vector<T> &output, const T &seperator)
 {
-	output.clear();
+    output.clear();
 
-	typedef typename T::size_type size_type_t;
-	typedef typename T::value_type value_type_t;
+    typedef typename T::size_type size_type_t;
+    typedef typename T::value_type value_type_t;
 
-	size_type_t npos_t = std::basic_string<value_type_t>::npos;
+    size_type_t npos_t = std::basic_string<value_type_t>::npos;
 
-	size_type_t last = 0;  
+    size_type_t last = 0;  
     size_type_t index = input.find_first_of(seperator, last);
 
     while (index != npos_t)
