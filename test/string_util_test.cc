@@ -22,7 +22,7 @@
 
 #include <iostream>
 
-#include "../include/string_util.hpp"
+#include "../include/string_util.h"
 
 int main()
 {

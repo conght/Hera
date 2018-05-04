@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include <iostream>
+#include <algorithm>
 
 namespace hera {
 
@@ -77,5 +77,67 @@ static void split(const T &input, std::vector<T> &output, const T &seperator)
     }
     return;
 }
+
+// trim from start (in place)
+template<typename T>
+static inline void ltrim(T &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) {
+        return !std::isspace(ch);
+    }));
+}
+
+// trim from end (in place)
+template<typename T>
+static inline void rtrim(T &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
+}
+
+// trim from both ends (in place)
+template<typename T>
+static inline void trim(T &s) {
+    ltrim(s);
+    rtrim(s);
+}
+
+// trim from start (copying)
+template<typename T>
+static inline T ltrim_copy(T s) {
+    ltrim(s);
+    return s;
+}
+
+// trim from end (copying)
+template<typename T>
+static inline T rtrim_copy(T s) {
+    rtrim(s);
+    return s;
+}
+
+// trim from both ends (copying)
+template<typename T>
+static inline T trim_copy(T s) {
+    trim(s);
+    return s;
+}
+
+// Returns an std::basic_string<> object.
+// It is a static function.  And it is thread-safe.
+// Example : 
+// 
+template <typename T, typename A>
+static T join(const A &begin, const A &end, const T &t)
+{
+    T result;
+    for (A it = begin; it != end; it++)
+    {
+        if (!result.empty())
+            result.append(t);
+        result.append(*it);
+    }
+    return result;
+}
+
 }
 #endif
