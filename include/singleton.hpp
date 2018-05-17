@@ -28,7 +28,8 @@
 
 #include "noncopyable.h"
 
-namespace hera {
+namespace hera 
+{
 
 
 // A singleton template class.

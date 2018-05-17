@@ -20,24 +20,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// Noncopyable is a class which can make the class inherited it be noncopyable.
 
-#ifndef HERA_INCLUDE_NONCOPYABLE_H_
-#define HERA_INCLUDE_NONCOPYABLE_H_
+#ifndef HERA_INCLUDE_CLOCK_H_
+#define HERA_INCLUDE_CLOCK_H_
+
+#include <chrono>
 
 namespace hera
 {
+	template<class Proid>
+	std::time_t get_current_timestamp()
+	{
+		using namespace std::chrono;
 
+		time_point<system_clock, Proid> tp = time_point_cast<Proid>(system_clock::now());  
+    	return duration_cast<Proid>(tp.time_since_epoch()).count();  
+	}
 
-// Noncopyable class.
-// Example:
-//    Class CYourNewClass : hera::Noncopyable { ...
-//    ...
-class Noncopyable {
-private:
-    Noncopyable(const Noncopyable &);
-    Noncopyable& operator=(const Noncopyable &);
-};
+	std::time_t get_second_timestamp()
+	{
+		return get_current_timestamp<std::chrono::seconds>();
+	}
+
+	std::time_t get_millisecond_timestamp()
+	{
+		return get_current_timestamp<std::chrono::milliseconds>();
+	}
+
+	std::time_t get_mircosecond_timestamp()
+	{
+		return get_current_timestamp<std::chrono::microseconds>();
+	}
 
 }
 #endif
