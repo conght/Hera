@@ -34,6 +34,10 @@ namespace hera
 //    Class CYourNewClass : hera::Noncopyable { ...
 //    ...
 class Noncopyable {
+
+protected:
+	Noncopyable() {}
+	~Noncopyable() {}
 private:
     Noncopyable(const Noncopyable &);
     Noncopyable& operator=(const Noncopyable &);
