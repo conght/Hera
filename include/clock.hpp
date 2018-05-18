@@ -63,6 +63,10 @@ public:
 	static inline std::string literal_value() {
 		return " s";
 	}
+
+	static inline std::streamsize precision() {
+		return 9;
+	}
 };
 
 template<>
@@ -71,6 +75,10 @@ class ProidLiteral<std::nano>
 public:
 	static inline std::string literal_value() {
 		return " ns";
+	}
+
+	static inline std::streamsize precision() {
+		return 2;
 	}
 };
 
@@ -81,6 +89,10 @@ public:
 	static inline std::string literal_value() {
 		return " us";
 	}
+
+	static inline std::streamsize precision() {
+		return 2;
+	}
 };
 
 template<>
@@ -90,22 +102,40 @@ public:
 	static inline std::string literal_value() {
 		return " ms";
 	}
+
+	static inline std::streamsize precision() {
+		return 6;
+	}
 };
 
 template<class Proid>
-class ProgressTimer : private Noncopyable
+class Timer
 {
 public:
-	explicit ProgressTimer( std::ostream & os = std::cout )
-	// os is hint; implementation may ignore, particularly in embedded systems
-	: Noncopyable(), m_os(os) { _start_time = std::chrono::high_resolution_clock::now(); }
 
+	Timer() { _start_time = std::chrono::high_resolution_clock::now(); }
+	
 	void   restart() { _start_time = std::chrono::high_resolution_clock::now(); }
+	
 	double elapsed() const     // return elapsed time in Proid
 	{
 		std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
 		return std::chrono::duration_cast<std::chrono::duration<double, Proid> >(t2 - _start_time).count();
 	}
+
+private:
+
+	std::chrono::high_resolution_clock::time_point _start_time;
+
+};
+
+template<class Proid>
+class ProgressTimer : public Timer<Proid>, private Noncopyable
+{
+public:
+	explicit ProgressTimer( std::ostream & os = std::cout )
+	// os is hint; implementation may ignore, particularly in embedded systems
+	: Timer<Proid> (), Noncopyable(), m_os(os) {}
 
 	~ProgressTimer()
 	{
@@ -118,8 +148,8 @@ public:
 			// use istream instead of ios_base to workaround GNU problem (Greg Chicares)
 			std::istream::fmtflags old_flags = m_os.setf( std::istream::fixed,
 			                                           std::istream::floatfield );
-			//std::streamsize old_prec = m_os.precision( 2 );
-			m_os << elapsed() << ProidLiteral<Proid>::literal_value() << "\n"; // "s" is System International d'Unites std
+			std::streamsize old_prec = m_os.precision( ProidLiteral<Proid>::precision() );
+			m_os << this->elapsed() << ProidLiteral<Proid>::literal_value() << "\n"; // "s" is System International d'Unites std
 			m_os.flags( old_flags );
 			//m_os.precision( old_prec );
 	    }
@@ -129,7 +159,6 @@ public:
 
 private:
 	std::ostream & m_os;
-	std::chrono::high_resolution_clock::time_point _start_time;
 };
 
 

@@ -71,7 +71,7 @@ int test_chrono_milliseconds_duration()
 
 int test_chrono_seconds_duration()  
 {  
-    ::hera::ProgressTimer<std::ratio<1>> pt;  
+    ::hera::ProgressTimer<std::ratio<1> > pt;  
   
     return 0;  
 }
@@ -82,6 +82,7 @@ int main()
 	test_chrono_nanoseconds_duration();
 	test_chrono_microseconds_duration();
 	test_chrono_milliseconds_duration();
+    test_chrono_seconds_duration();
 	
     std::cout << ::hera::get_second_timestamp() << std::endl;
 	std::cout << ::hera::get_millisecond_timestamp() << std::endl;
