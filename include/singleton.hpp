@@ -38,7 +38,7 @@ namespace hera
 //    ...
 //    CYourNewClass* singleton_instance = CYourNewClass::instance();
 template <typename T>
-class Singleton : public Noncopyable
+class Singleton
 {
   private:
     struct object_creator
