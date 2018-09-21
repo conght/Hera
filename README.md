@@ -1,7 +1,7 @@
 # Hera 
 [Hera 中文手册](README_CN.md)
 
-An awesome common lib for C++ .
+An awesome common lib for C++, implemented by using CPP template.
 
 ### How to install
 
