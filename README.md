@@ -1,4 +1,9 @@
 # Hera 
+
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
+[![Build Status](https://travis-ci.org/XiaoMi/mace.svg?branch=master)](https://travis-ci.org/XiaoMi/mace)
+[![doc build status](https://readthedocs.org/projects/mace/badge/?version=latest)](https://readthedocs.org/projects/mace/badge/?version=latest)
+
 [Hera 中文手册](README_CN.md)
 
 An awesome common lib for C++, implemented by using CPP template.
